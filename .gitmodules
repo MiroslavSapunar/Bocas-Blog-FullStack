@@ -1,0 +1,3 @@
+[submodule "bocas-blog"]
+	path = bocas-blog
+	url = https://github.com/MiroslavSapunar/Bocas-Blog.git
