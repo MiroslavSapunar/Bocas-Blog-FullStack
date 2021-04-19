@@ -1,0 +1,18 @@
+#Docker Volumnes
+data/mongo/*
+data/strapi/uploads/*
+!data/mongo/.gitkeep
+!data/strapi/uploads/.gitkeep
+
+# Mongo Backup
+db-dump/*
+!db-dump/.gitkeep
+/dump
+
+#vscode
+mc-compromiso.code-workspace
+
+.env
+
+#strapi
+.strapi-updater.json
