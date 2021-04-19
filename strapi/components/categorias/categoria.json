@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_categorias_categorias",
+  "info": {
+    "name": "categoria",
+    "icon": "bookmark"
+  },
+  "options": {},
+  "attributes": {
+    "nombre_categoria": {
+      "type": "string"
+    },
+    "valor_categoria": {
+      "type": "string"
+    }
+  }
+}

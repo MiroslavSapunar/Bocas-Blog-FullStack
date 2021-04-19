@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Autores",
+  "info": {
+    "name": "Autor"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "nombre": {
+      "type": "string"
+    },
+    "posts": {
+      "via": "autor",
+      "collection": "post"
+    }
+  }
+}

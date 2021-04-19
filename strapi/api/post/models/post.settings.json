@@ -1,0 +1,55 @@
+{
+  "kind": "collectionType",
+  "collectionName": "Posts",
+  "info": {
+    "name": "Post"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "destacado": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "resumen": {
+      "type": "richtext",
+      "required": true
+    },
+    "contenido": {
+      "type": "richtext",
+      "required": true
+    },
+    "frase_destacada": {
+      "type": "richtext",
+      "required": true
+    },
+    "imagenes": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "autor": {
+      "model": "autor",
+      "via": "posts"
+    },
+    "categorias": {
+      "type": "component",
+      "repeatable": true,
+      "component": "categorias.categoria",
+      "required": true
+    }
+  }
+}
