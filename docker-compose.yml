@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+  nginx-proxy:
+    container_name: bocas-blog-proxy
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  web:
+    container_name: bocas-blog-web
+    image: node:14-buster-slim
+    working_dir: /usr/src/app
+    command: bash -c "npm install && npm run dev"
+    volumes:
+      - ./bocas-blog:/usr/src/app
+    environment:
+      - VIRTUAL_HOST=local.bocas-blog.com.ar
+      - NEXT_PUBLIC_STRAPI_URL=${STRAPI_URL_PUBLIC}
+      - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
+      - STRAPI_API_KEY=${STRAPI_API_KEY}
+    expose:
+      - "3000"
+    depends_on: 
+      - strapi
+
+  strapi:
+    container_name: bocas-blog-strapi
+    image: strapi/strapi:alpine
+    environment:
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: mc-api
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: ${MONGO_USER}
+      DATABASE_PASSWORD: ${MONGO_PASS}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+    volumes:
+      - ./strapi:/srv/app
+      - ./data/strapi/uploads:/srv/app/public/uploads
+    expose:
+      - "1337"
+    links:
+      - mongo:mongo
+    depends_on: 
+      - mongo
+    environment: 
+      - VIRTUAL_HOST=local.api.bocas-blog.com.ar 
+      - STRAPI_API_KEY=${STRAPI_API_KEY}
+      
+  mongo:
+    container_name: bocas-blog-db
+    image: mongo:4-bionic
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    ports: 
+      - 7000:27017
+    volumes:
+      - ./data/mongo:/data/db
+      - ./db-dump:/dump
+    expose:
+      - "27017"
+
+  
+
+
+
+
