@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "Posts",
   "info": {
-    "name": "Post"
+    "name": "Post",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -28,10 +29,6 @@
       "type": "richtext",
       "required": true
     },
-    "frase_destacada": {
-      "type": "richtext",
-      "required": true
-    },
     "imagenes": {
       "collection": "file",
       "via": "related",
@@ -50,6 +47,14 @@
       "repeatable": true,
       "component": "categorias.categoria",
       "required": true
+    },
+    "frase_destacada": {
+      "type": "string",
+      "required": false
+    },
+    "seo_url": {
+      "type": "uid",
+      "targetField": "titulo"
     }
   }
 }

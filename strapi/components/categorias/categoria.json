@@ -2,14 +2,12 @@
   "collectionName": "components_categorias_categorias",
   "info": {
     "name": "categoria",
-    "icon": "bookmark"
+    "icon": "bookmark",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "nombre_categoria": {
-      "type": "string"
-    },
-    "valor_categoria": {
+    "categoria": {
       "type": "string"
     }
   }
