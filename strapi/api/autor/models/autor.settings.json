@@ -2,20 +2,22 @@
   "kind": "collectionType",
   "collectionName": "Autores",
   "info": {
-    "name": "Autor"
+    "name": "Autor",
+    "description": ""
   },
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "nombre": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "posts": {
-      "via": "autor",
-      "collection": "post"
+      "collection": "post",
+      "via": "autor"
     }
   }
 }

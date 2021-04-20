@@ -36,17 +36,17 @@
         "images"
       ],
       "plugin": "upload",
-      "required": true
+      "required": false
     },
     "autor": {
-      "model": "autor",
-      "via": "posts"
+      "via": "posts",
+      "model": "autor"
     },
     "categorias": {
       "type": "component",
       "repeatable": true,
       "component": "categorias.categoria",
-      "required": true
+      "required": false
     },
     "frase_destacada": {
       "type": "string",
