@@ -1,16 +1,19 @@
 version: '3.4'
 
 services:
-  nginx-proxy:
-    container_name: bocas-blog-proxy
+  proxy:
+    container_name: bocas-proxy
+    restart: unless-stopped
     image: jwilder/nginx-proxy
     ports:
       - 80:80
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./proxy/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
 
   web:
-    container_name: bocas-blog-web
+    container_name: bocas-web
+    restart: unless-stopped    
     image: node:14-buster-slim
     working_dir: /usr/src/app
     command: bash -c "npm install && npm run dev"
@@ -27,7 +30,8 @@ services:
       - strapi
 
   strapi:
-    container_name: bocas-blog-strapi
+    container_name: bocas-strapi
+    restart: unless-stopped
     image: strapi/strapi:alpine
     environment:
       DATABASE_CLIENT: mongo
@@ -51,7 +55,8 @@ services:
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       
   mongo:
-    container_name: bocas-blog-db
+    container_name: bocas-mongo
+    restart: unless-stopped
     image: mongo:4-bionic
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
