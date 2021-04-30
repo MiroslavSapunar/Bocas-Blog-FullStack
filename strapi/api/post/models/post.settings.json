@@ -61,6 +61,11 @@
       "private": false,
       "default": 0,
       "min": 0
+    },
+    "tiempo_lectura": {
+      "type": "integer",
+      "required": true,
+      "default": 5
     }
   }
 }
