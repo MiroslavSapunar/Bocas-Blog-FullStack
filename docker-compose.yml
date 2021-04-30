@@ -1,15 +1,6 @@
-version: '3.4'
+version: '3'
 
 services:
-  proxy:
-    container_name: bocas-proxy
-    restart: unless-stopped
-    image: jwilder/nginx-proxy
-    ports:
-      - 80:80
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./proxy/client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf:ro
 
   web:
     container_name: bocas-web
@@ -20,12 +11,15 @@ services:
     volumes:
       - ./bocas-blog:/usr/src/app
     environment:
-      - VIRTUAL_HOST=local.bocas-blog.com.ar
-      - NEXT_PUBLIC_STRAPI_URL=${STRAPI_URL_PUBLIC}
+      - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
     expose:
       - "3000"
+    ports: 
+      - 80:3000
+    networks: 
+      - bocas-services
     depends_on: 
       - strapi
 
@@ -46,12 +40,13 @@ services:
       - ./data/strapi/uploads:/srv/app/public/uploads
     expose:
       - "1337"
-    links:
-      - mongo:mongo
+    ports:
+      - 1337:1337    
+    networks: 
+      - bocas-services
     depends_on: 
       - mongo
     environment: 
-      - VIRTUAL_HOST=local.api.bocas-blog.com.ar 
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       
   mongo:
@@ -68,6 +63,12 @@ services:
       - ./db-dump:/dump
     expose:
       - "27017"
+    networks: 
+      - bocas-services
+
+networks: 
+    bocas-services:
+        driver: bridge
 
   
 

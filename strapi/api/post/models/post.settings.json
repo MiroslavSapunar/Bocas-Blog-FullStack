@@ -39,8 +39,8 @@
       "required": false
     },
     "autor": {
-      "via": "posts",
-      "model": "autor"
+      "model": "autor",
+      "via": "posts"
     },
     "categorias": {
       "type": "component",
@@ -55,6 +55,12 @@
     "seo_url": {
       "type": "uid",
       "targetField": "titulo"
+    },
+    "vistas": {
+      "type": "integer",
+      "private": false,
+      "default": 0,
+      "min": 0
     }
   }
 }

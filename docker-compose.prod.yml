@@ -1,40 +1,61 @@
 version: '3.4'
 
 services:
+  nginx-proxy:
+    container_name: bocas-nginx
+    restart: always
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:      
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+    
+  letsencrypt:
+    container_name: bocas-letsencrypt
+    restart: always
+    image: jrcs/letsencrypt-nginx-proxy-companion      
+    environment:
+      - NGINX_PROXY_CONTAINER=mc-compromiso-nginx
+      - DEFAULT_EMAIL=monorato@fi.uba.ar
+    volumes:
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
   web:
-    container_name: mc-compromiso-web
+    container_name: bocas-web
     restart: always
     build:
       context: ./web
       args: 
       - NEXT_PUBLIC_STRAPI_URL=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
-      - NEXT_PUBLIC_GOOGLE_API=${GOOGLE_API_FRONT}
-      - GOOGLE_API_BACK=${GOOGLE_API_BACK}
-      - NEXT_PUBLIC_reCAPTCHA_SITE=${RECAPTCHA_SITE}
-      - reCAPTCHA_SECRET=${RECAPTCHA_SECRET}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      network: compromiso_default
+      network: compromiso-abastecimiento_default
     expose: 
       - "3000"
     environment:
       - NEXT_PUBLIC_STRAPI_URL=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
-      - NEXT_PUBLIC_GOOGLE_API=${GOOGLE_API_FRONT}
-      - GOOGLE_API_BACK=${GOOGLE_API_BACK}
-      - NEXT_PUBLIC_reCAPTCHA_SITE=${RECAPTCHA_SITE}
-      - reCAPTCHA_SECRET=${RECAPTCHA_SECRET}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - VIRTUAL_HOST=compromiso.mercadocentral.gob.ar,www.compromiso.mercadocentral.gob.ar,compromisosocialdeabastecimiento.gob.ar,www.compromisosocialdeabastecimiento.gob.ar
       - LETSENCRYPT_HOST=compromiso.mercadocentral.gob.ar,www.compromiso.mercadocentral.gob.ar,compromisosocialdeabastecimiento.gob.ar,www.compromisosocialdeabastecimiento.gob.ar
     depends_on:    
       - strapi
-    networks: 
-      - default
-      - compromiso
 
   strapi:
-    container_name: mc-compromiso-strapi
+    container_name: bocas-strapi
     restart: always
     build: ./strapi
     environment:
@@ -44,7 +65,6 @@ services:
       DATABASE_PORT: 27017
       DATABASE_USERNAME: ${MONGO_USER}
       DATABASE_PASSWORD: ${MONGO_PASS}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
     expose:
       - "1337"
     links:
@@ -59,12 +79,34 @@ services:
       - ./data/strapi/uploads:/usr/src/app/public/uploads
     depends_on:
       - mongo
-    networks: 
-      - default
-      - compromiso
+      - nginx-proxy      
+      - letsencrypt
+
+  netdata:
+    image: netdata/netdata
+    container_name: netdata
+    hostname: gestion.compromiso.mercadocentral.gob.ar # set to fqdn of host
+    expose:
+      - "19999"
+    restart: unless-stopped
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    volumes:
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+    environment:
+      - VIRTUAL_HOST=gestion.compromiso.mercadocentral.gob.ar
+      - LETSENCRYPT_HOST=gestion.compromiso.mercadocentral.gob.ar
 
   mongo:
-    container_name: mc-compromiso-db
+    container_name: bocas-db
     restart: always
     image: mongo:4-bionic
     environment:
@@ -72,13 +114,16 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     volumes:
       - ./data/mongo:/data/db
-      - ./db-dump:/dump
     expose:
       - "27017"
     ports:
-      - "7000:27017"
+      - "27017:27017"
 
-networks:
-  compromiso:
-    external: true
-
+volumes:
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  netdatalib:
+  netdatacache:
