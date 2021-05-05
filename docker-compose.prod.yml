@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+
   nginx-proxy:
     container_name: bocas-nginx
     restart: always
@@ -8,6 +9,8 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    networks: 
+      - bocas-services
     volumes:      
       - conf:/etc/nginx/conf.d
       - vhost:/etc/nginx/vhost.d
@@ -21,7 +24,7 @@ services:
   letsencrypt:
     container_name: bocas-letsencrypt
     restart: always
-    image: jrcs/letsencrypt-nginx-proxy-companion      
+    image: jrcs/letsencrypt-nginx-proxy-companion
     environment:
       - NGINX_PROXY_CONTAINER=bocas-nginx
       - DEFAULT_EMAIL=psapunar@fi.uba.ar
@@ -32,7 +35,11 @@ services:
       - dhparam:/etc/nginx/dhparam
       - certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
-
+    depends_on: 
+      - nginx-proxy
+    networks: 
+      - bocas-services
+  
   web:
     container_name: bocas-web
     restart: always
@@ -42,15 +49,17 @@ services:
       - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      network: bocas_default
-    expose: 
-      - "3000"
+      network: blog_bocas-services
+    ports:
+      - "3000:3000"
+    networks: 
+      - bocas-services
     environment:
       - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      - VIRTUAL_HOST=blog.bocas.com.ar,www.blog.bocas.com.ar
-      - LETSENCRYPT_HOST=blog.bocas.com.ar,www.blog.bocas.com.ar
+      - VIRTUAL_HOST=blog.paginamiro.com.ar, www.blog.paginamiro.com.ar
+      - LETSENCRYPT_HOST=blog.miro.com, www.blog.paginamiro.com.ar
     depends_on:    
       - strapi
 
@@ -65,16 +74,16 @@ services:
       DATABASE_PORT: 27017
       DATABASE_USERNAME: ${MONGO_USER}
       DATABASE_PASSWORD: ${MONGO_PASS}
-    expose:
-      - "1337"
-    links:
-      - mongo:mongo
+    ports: 
+      - "1337:1337"
+    networks: 
+      - bocas-services
     depends_on: 
       - mongo
     environment:
       - STRAPI_API_KEY=${STRAPI_API_KEY} 
-      - VIRTUAL_HOST=api.blog.bocas.com.ar
-      - LETSENCRYPT_HOST=api.blog.bocas.com.ar
+      - VIRTUAL_HOST=api.blog.paginamiro.com.ar, www.api.blog.paginamiro.com.ar
+      - LETSENCRYPT_HOST=api.blog.paginamiro.com.ar, www.api.blog.paginamiro.com.ar 
     volumes:
       - ./data/strapi/uploads:/usr/src/app/public/uploads
     depends_on:
@@ -83,7 +92,7 @@ services:
       - letsencrypt
 
   mongo:
-    container_name: mc-compromiso-db
+    container_name: bocas-db
     restart: always
     image: mongo:4-bionic
     environment:
@@ -91,10 +100,16 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     volumes:
       - ./data/mongo:/data/db
-    expose:
+    ports: 
+      - 7000:27017
+    expose: 
       - "27017"
-    ports:
-      - "27017:27017"
+    networks: 
+    - bocas-services
+
+networks: 
+  bocas-services:
+    driver: bridge
 
 volumes:
   conf:
