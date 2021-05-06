@@ -49,7 +49,7 @@ services:
       - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      network: blog_bocas-services
+      network: bocas-blog-fullstack_bocas-services
     ports:
       - "3000:3000"
     networks: 
@@ -58,8 +58,8 @@ services:
       - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      - VIRTUAL_HOST=blog.paginamiro.com.ar, www.blog.paginamiro.com.ar
-      - LETSENCRYPT_HOST=blog.miro.com, www.blog.paginamiro.com.ar
+      - VIRTUAL_HOST=blog.bocas.com.ar
+      - LETSENCRYPT_HOST=blog.bocas.com.ar
     depends_on:    
       - strapi
 
@@ -82,8 +82,6 @@ services:
       - mongo
     environment:
       - STRAPI_API_KEY=${STRAPI_API_KEY} 
-      - VIRTUAL_HOST=api.blog.paginamiro.com.ar, www.api.blog.paginamiro.com.ar
-      - LETSENCRYPT_HOST=api.blog.paginamiro.com.ar, www.api.blog.paginamiro.com.ar 
     volumes:
       - ./data/strapi/uploads:/usr/src/app/public/uploads
     depends_on:
