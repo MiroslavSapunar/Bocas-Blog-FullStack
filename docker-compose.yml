@@ -11,7 +11,7 @@ services:
     volumes:
       - ./bocas-blog:/usr/src/app
     environment:
-      - NEXT_PUBLIC_URL=${STRAPI_URL_PUBLIC}
+      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
     ports: 
