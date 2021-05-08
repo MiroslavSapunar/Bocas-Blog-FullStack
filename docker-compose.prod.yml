@@ -58,8 +58,8 @@ services:
       - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      - VIRTUAL_HOST=blog.bocas.com.ar
-      - LETSENCRYPT_HOST=blog.bocas.com.ar
+      - VIRTUAL_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
+      - LETSENCRYPT_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
     depends_on:    
       - strapi
 
@@ -81,7 +81,9 @@ services:
     depends_on: 
       - mongo
     environment:
-      - STRAPI_API_KEY=${STRAPI_API_KEY} 
+      - STRAPI_API_KEY=${STRAPI_API_KEY}
+      - VIRTUAL_HOST=api.blog.bocas.com.ar
+      - LETSENCRYPT_HOST=api.blog.bocas.com.ar
     volumes:
       - ./data/strapi/uploads:/usr/src/app/public/uploads
     depends_on:
