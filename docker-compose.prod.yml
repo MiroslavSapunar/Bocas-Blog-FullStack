@@ -46,7 +46,7 @@ services:
     build:
       context: ./bocas-blog
       args: 
-      - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
+      - NEXT_PUBLIC_URL=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       network: bocas-blog-fullstack_bocas-services
@@ -55,7 +55,7 @@ services:
     networks: 
       - bocas-services
     environment:
-      - STRAPI_URL_PUBLIC=${STRAPI_URL_PUBLIC}
+      - NEXT_PUBLIC_URL=${STRAPI_URL_PUBLIC}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - VIRTUAL_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
