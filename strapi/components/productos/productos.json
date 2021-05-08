@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_productos_productos",
+  "info": {
+    "name": "productos",
+    "icon": "apple-alt"
+  },
+  "options": {},
+  "attributes": {
+    "url_bocas_producto": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

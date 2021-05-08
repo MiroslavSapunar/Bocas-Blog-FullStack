@@ -42,12 +42,6 @@
       "model": "autor",
       "via": "posts"
     },
-    "categorias": {
-      "type": "component",
-      "repeatable": true,
-      "component": "categorias.categoria",
-      "required": false
-    },
     "frase_destacada": {
       "type": "string",
       "required": false
@@ -66,6 +60,17 @@
       "type": "integer",
       "required": true,
       "default": 5
+    },
+    "productos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "productos.productos",
+      "required": false
+    },
+    "categorias": {
+      "collection": "categorias",
+      "via": "posts",
+      "dominant": true
     }
   }
 }
