@@ -21,25 +21,6 @@ services:
     labels:
       - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
     
-  letsencrypt:
-    container_name: bocas-letsencrypt
-    restart: always
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    environment:
-      - NGINX_PROXY_CONTAINER=bocas-nginx
-      - DEFAULT_EMAIL=p.miroslav.sapunar@gmail.com
-    volumes:
-      - conf:/etc/nginx/conf.d
-      - vhost:/etc/nginx/vhost.d
-      - html:/usr/share/nginx/html
-      - dhparam:/etc/nginx/dhparam
-      - certs:/etc/nginx/certs:rw
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on: 
-      - nginx-proxy
-    networks: 
-      - bocas-services
-  
   web:
     container_name: bocas-web
     restart: always
@@ -52,7 +33,7 @@ services:
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
-      network: bocas-blog-fullstack_bocas-services
+      network: blog_bocas-services
     ports:
       - "3000:3000"
     networks: 
@@ -64,8 +45,8 @@ services:
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
-      - VIRTUAL_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
-      - LETSENCRYPT_HOST=blog.bocas.com.ar
+      - VIRTUAL_HOST=test.blog.paginamiro.com.ar
+      # - LETSENCRYPT_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
     depends_on:    
       - strapi
 
@@ -88,14 +69,12 @@ services:
       - mongo
     environment:
       - STRAPI_API_KEY=${STRAPI_API_KEY}
-      - VIRTUAL_HOST=apis.blog.bocas.com.ar
-      - LETSENCRYPT_HOST=apis.blog.bocas.com.ar
+      - VIRTUAL_HOST=test.api.blog.paginamiro.com.ar
     volumes:
       - ./data/strapi/uploads:/usr/src/app/public/uploads
     depends_on:
       - mongo
       - nginx-proxy      
-      - letsencrypt
 
   mongo:
     container_name: bocas-db

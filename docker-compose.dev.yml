@@ -2,8 +2,8 @@ version: '3'
 
 services:
 
-  web:
-    container_name: bocas-web
+  web-dev:
+    container_name: bocas-web-dev
     restart: unless-stopped    
     image: node:14-buster-slim
     working_dir: /usr/src/app
@@ -11,25 +11,26 @@ services:
     volumes:
       - ./bocas-blog:/usr/src/app
     environment:
-      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
-      - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
+      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI_DEV}
+      - STRAPI_URL_BUILD=${STRAPI_URL_BUILD_DEV}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
+      - IG_TEST_TOKEN=${IG_TEST_TOKEN}
+      - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
+      - GOOGLE_TAG=${GOOGLE_TAG}
     ports: 
-      - 3000:3000
-    networks: 
-      - bocas-services
+      - 3001:3000
     depends_on: 
-      - strapi
+      - strapi-dev
 
-  strapi:
-    container_name: bocas-strapi
+  strapi-dev:
+    container_name: bocas-strapi-dev
     restart: unless-stopped
     image: strapi/strapi:alpine
     environment:
       DATABASE_CLIENT: mongo
       DATABASE_NAME: mc-api
       DATABASE_HOST: mongo
-      DATABASE_PORT: 27017
+      DATABASE_PORT: 27018
       DATABASE_USERNAME: ${MONGO_USER}
       DATABASE_PASSWORD: ${MONGO_PASS}
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
@@ -37,35 +38,26 @@ services:
       - ./strapi:/srv/app
       - ./data/strapi/uploads:/srv/app/public/uploads
     ports:
-      - 1337:1337    
-    networks: 
-      - bocas-services
+      - 1338:1337    
     depends_on: 
       - mongo
     environment: 
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       
   mongo:
-    container_name: bocas-mongo
+    container_name: bocas-mongo-dev
     restart: unless-stopped
     image: mongo:4-bionic
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     ports: 
-      - 7000:27017
+      - 7001:27018
     volumes:
       - ./data/mongo:/data/db
       - ./db-dump:/dump
     expose:
-      - "27017"
-    networks: 
-      - bocas-services
-
-networks: 
-    bocas-services:
-        driver: bridge
-
+      - "27018"
   
 
 
