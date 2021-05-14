@@ -33,6 +33,7 @@ services:
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
+      - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
       network: blog_bocas-services
     ports:
       - "3000:3000"
@@ -45,6 +46,7 @@ services:
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
+      - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
       - VIRTUAL_HOST=test.blog.paginamiro.com.ar
       # - LETSENCRYPT_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
     depends_on:    

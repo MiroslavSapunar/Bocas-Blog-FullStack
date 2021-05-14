@@ -17,6 +17,7 @@ services:
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
+      - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
     ports: 
       - 3001:3000
     depends_on: 
