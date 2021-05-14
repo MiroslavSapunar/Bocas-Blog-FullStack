@@ -18,6 +18,21 @@
     "posts": {
       "via": "autor",
       "collection": "post"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "link_personal": {
+      "type": "string"
+    },
+    "foto": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }
