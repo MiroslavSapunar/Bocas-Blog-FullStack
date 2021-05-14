@@ -23,7 +23,8 @@
     },
     "resumen": {
       "type": "richtext",
-      "required": true
+      "required": true,
+      "maxLength": 350
     },
     "contenido": {
       "type": "richtext",
@@ -44,7 +45,8 @@
     },
     "frase_destacada": {
       "type": "string",
-      "required": false
+      "required": false,
+      "maxLength": 370
     },
     "seo_url": {
       "type": "uid",
