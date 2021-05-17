@@ -37,7 +37,7 @@ services:
       ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
     volumes:
       - ./strapi:/srv/app
-      - ./data/strapi/uploads:/srv/app/public/uploads
+      - data_strapi:/srv/app/public/uploads
     ports:
       - 1338:1337    
     depends_on: 
@@ -55,12 +55,15 @@ services:
     ports: 
       - 7001:27018
     volumes:
-      - ./data/mongo:/data/db
-      - ./db-dump:/dump
+      - data_mongo:/data/db
+      - db_dump:/dump
     expose:
       - "27018"
   
-
+volumes:
+  data_strapi:
+  data_mongo:
+  db_dump:
 
 
 
