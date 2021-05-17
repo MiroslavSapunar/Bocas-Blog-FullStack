@@ -39,7 +39,7 @@
     "seo_url": {
       "type": "uid",
       "targetField": "nombre",
-      "required": true
+      "required": false
     }
   }
 }
