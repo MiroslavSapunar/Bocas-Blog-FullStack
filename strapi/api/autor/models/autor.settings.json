@@ -16,14 +16,16 @@
       "required": true
     },
     "posts": {
-      "via": "autor",
-      "collection": "post"
+      "collection": "post",
+      "via": "autor"
     },
     "bio": {
-      "type": "richtext"
+      "type": "richtext",
+      "required": true
     },
     "link_personal": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "foto": {
       "model": "file",
@@ -32,7 +34,12 @@
         "images"
       ],
       "plugin": "upload",
-      "required": false
+      "required": true
+    },
+    "seo_url": {
+      "type": "uid",
+      "targetField": "nombre",
+      "required": true
     }
   }
 }
