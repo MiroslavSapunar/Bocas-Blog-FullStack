@@ -40,8 +40,8 @@
       "required": false
     },
     "autor": {
-      "model": "autor",
-      "via": "posts"
+      "via": "posts",
+      "model": "autor"
     },
     "frase_destacada": {
       "type": "string",
