@@ -99,6 +99,30 @@ services:
       - nginx-proxy      
       - letsencrypt
 
+  strapi-dev:
+    container_name: bocas-strapi-dev
+    restart: unless-stopped
+    image: strapi/strapi:3-node12-alpine
+    environment:
+      DATABASE_CLIENT: mongo
+      DATABASE_NAME: bocas-api
+      DATABASE_HOST: mongo
+      DATABASE_PORT: 27017
+      DATABASE_USERNAME: ${MONGO_USER}
+      DATABASE_PASSWORD: ${MONGO_PASS}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+    networks: 
+      - bocas-services
+    volumes:
+      - ./strapi:/srv/app
+      - data_strapi:/srv/app/public/uploads
+    ports:
+      - 1338:1337    
+    depends_on: 
+      - mongo
+    environment: 
+      - STRAPI_API_KEY=${STRAPI_API_KEY}
+
   mongo:
     container_name: bocas-db
     restart: always
