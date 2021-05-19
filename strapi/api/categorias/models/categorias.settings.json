@@ -2,20 +2,25 @@
   "kind": "collectionType",
   "collectionName": "categorias",
   "info": {
-    "name": "Categorias"
+    "name": "Categoria",
+    "description": ""
   },
   "options": {
     "increments": true,
-    "timestamps": true,
-    "draftAndPublish": true
+    "timestamps": false,
+    "draftAndPublish": false
   },
   "attributes": {
     "categoria": {
       "type": "string"
     },
     "posts": {
-      "via": "categorias",
-      "collection": "post"
+      "collection": "post",
+      "via": "categorias"
+    },
+    "url": {
+      "type": "uid",
+      "targetField": "categoria"
     }
   }
 }

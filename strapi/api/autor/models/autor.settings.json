@@ -7,13 +7,14 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true,
-    "draftAndPublish": false
+    "timestamps": false,
+    "draftAndPublish": true
   },
   "attributes": {
     "nombre": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "posts": {
       "collection": "post",
@@ -40,6 +41,13 @@
       "type": "uid",
       "targetField": "nombre",
       "required": false
+    },
+    "index": {
+      "type": "integer",
+      "required": true,
+      "unique": false,
+      "min": 1,
+      "default": 1
     }
   }
 }

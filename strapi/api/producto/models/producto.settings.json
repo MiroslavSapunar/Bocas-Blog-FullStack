@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "productos",
+  "info": {
+    "name": "producto",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": false,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "nombre": {
+      "type": "string",
+      "required": true
+    },
+    "foto": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "url_producto_bocas": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

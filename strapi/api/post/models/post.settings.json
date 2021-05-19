@@ -7,7 +7,7 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true,
+    "timestamps": false,
     "draftAndPublish": true
   },
   "attributes": {
@@ -24,7 +24,7 @@
     "resumen": {
       "type": "richtext",
       "required": true,
-      "maxLength": 350
+      "maxLength": 380
     },
     "contenido": {
       "type": "richtext",
@@ -37,7 +37,7 @@
         "images"
       ],
       "plugin": "upload",
-      "required": false
+      "required": true
     },
     "autor": {
       "via": "posts",
@@ -63,16 +63,17 @@
       "required": true,
       "default": 5
     },
-    "productos": {
-      "type": "component",
-      "repeatable": true,
-      "component": "productos.productos",
-      "required": false
-    },
     "categorias": {
-      "collection": "categorias",
       "via": "posts",
+      "collection": "categorias",
       "dominant": true
+    },
+    "productos": {
+      "collection": "producto"
+    },
+    "fecha": {
+      "type": "date",
+      "required": true
     }
   }
 }

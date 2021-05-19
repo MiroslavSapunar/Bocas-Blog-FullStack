@@ -27,7 +27,7 @@ services:
     build:
       context: ./bocas-blog
       args: 
-      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
+      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI_TEST}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
@@ -58,7 +58,7 @@ services:
     build: ./strapi
     environment:
       DATABASE_CLIENT: mongo
-      DATABASE_NAME: mc-api
+      DATABASE_NAME: bocas-api
       DATABASE_HOST: mongo
       DATABASE_PORT: 27017
       DATABASE_USERNAME: ${MONGO_USER}
