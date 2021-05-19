@@ -27,7 +27,7 @@ services:
     build:
       context: ./bocas-blog
       args: 
-      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI_TEST}
+      - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
