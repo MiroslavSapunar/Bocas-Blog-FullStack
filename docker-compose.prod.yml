@@ -53,6 +53,7 @@ services:
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
       network: bocas-blog-fullstack_bocas-services
     ports:
       - "3000:3000"
@@ -66,6 +67,7 @@ services:
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
       - VIRTUAL_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
       - LETSENCRYPT_HOST=blog.bocas.com.ar
     depends_on:    
@@ -98,30 +100,6 @@ services:
       - mongo
       - nginx-proxy      
       - letsencrypt
-
-  strapi-dev:
-    container_name: bocas-strapi-dev
-    restart: unless-stopped
-    image: strapi/strapi:3-node12-alpine
-    environment:
-      DATABASE_CLIENT: mongo
-      DATABASE_NAME: bocas-api
-      DATABASE_HOST: mongo
-      DATABASE_PORT: 27017
-      DATABASE_USERNAME: ${MONGO_USER}
-      DATABASE_PASSWORD: ${MONGO_PASS}
-      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
-    networks: 
-      - bocas-services
-    volumes:
-      - ./strapi:/srv/app
-      - data_strapi:/srv/app/public/uploads
-    ports:
-      - 1338:1337    
-    depends_on: 
-      - mongo
-    environment: 
-      - STRAPI_API_KEY=${STRAPI_API_KEY}
 
   mongo:
     container_name: bocas-db

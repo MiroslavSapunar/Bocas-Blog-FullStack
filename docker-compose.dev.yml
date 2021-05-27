@@ -2,6 +2,25 @@ version: '3'
 
 services:
 
+  nginx-proxy:
+    container_name: bocas-nginx
+    restart: always
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    networks: 
+      - bocas-services
+    volumes:      
+      - conf:/etc/nginx/conf.d
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+      - certs:/etc/nginx/certs:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+  
   web-dev:
     container_name: bocas-web-dev
     restart: unless-stopped    
@@ -18,8 +37,12 @@ services:
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
+      - VIRTUAL_HOST=dev.blog.paginamiro.com.ar
     ports: 
       - 3000:3000
+    networks: 
+      - bocas-services
     depends_on: 
       - strapi-dev
 
@@ -29,7 +52,7 @@ services:
     image: strapi/strapi:3-node12-alpine
     environment:
       DATABASE_CLIENT: mongo
-      DATABASE_NAME: bocas-api
+      DATABASE_NAME: mc-api
       DATABASE_HOST: mongo
       DATABASE_PORT: 27017
       DATABASE_USERNAME: ${MONGO_USER}
@@ -39,11 +62,16 @@ services:
       - ./strapi:/srv/app
       - data_strapi:/srv/app/public/uploads
     ports:
-      - 1337:1337    
-    depends_on: 
+      - 1337:1337
+    networks: 
+      - bocas-services
+    depends_on:
       - mongo
+      - nginx-proxy
     environment: 
       - STRAPI_API_KEY=${STRAPI_API_KEY}
+      - VIRTUAL_HOST=dev.api.blog.paginamiro.com.ar
+
       
   mongo:
     container_name: bocas-mongo-dev
@@ -52,6 +80,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    networks: 
+      - bocas-services
     ports: 
       - 7000:27017
     volumes:
@@ -60,10 +90,18 @@ services:
     expose:
       - "27017"
   
+networks: 
+  bocas-services:
+    driver: bridge
+      
 volumes:
   data_strapi:
   data_mongo:
   db_dump:
-
-
-
+  conf:
+  vhost:
+  html:
+  dhparam:
+  certs:
+  netdatalib:
+  netdatacache:

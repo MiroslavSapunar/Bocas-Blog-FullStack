@@ -34,6 +34,7 @@ services:
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
       network: blog_bocas-services
     ports:
       - "3000:3000"
@@ -47,6 +48,7 @@ services:
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
       - GOOGLE_TAG=${GOOGLE_TAG}
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
+      - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
       - VIRTUAL_HOST=test.blog.paginamiro.com.ar
       # - LETSENCRYPT_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
     depends_on:    
@@ -58,7 +60,7 @@ services:
     build: ./strapi
     environment:
       DATABASE_CLIENT: mongo
-      DATABASE_NAME: bocas-api
+      DATABASE_NAME: mc-api
       DATABASE_HOST: mongo
       DATABASE_PORT: 27017
       DATABASE_USERNAME: ${MONGO_USER}
@@ -67,8 +69,6 @@ services:
       - "1337:1337"
     networks: 
       - bocas-services
-    depends_on: 
-      - mongo
     environment:
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - VIRTUAL_HOST=test.api.blog.paginamiro.com.ar
