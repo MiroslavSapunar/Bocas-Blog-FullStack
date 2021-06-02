@@ -47,7 +47,9 @@ services:
       context: ./bocas-blog
       args: 
       - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
+      - NEXT_PUBLIC_URL_STRAPI_IMAGE=${NEXT_PUBLIC_URL_STRAPI_IMAGE}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
+      - NEXT_PUBLIC_ADMIN_JWT_SECRET=${NEXT_PUBLIC_ADMIN_JWT_SECRET}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
@@ -61,7 +63,9 @@ services:
       - bocas-services
     environment:
       - NEXT_PUBLIC_URL_STRAPI=${NEXT_PUBLIC_URL_STRAPI}
+      - NEXT_PUBLIC_URL_STRAPI_IMAGE=${NEXT_PUBLIC_URL_STRAPI_IMAGE}
       - STRAPI_URL_BUILD=${STRAPI_URL_BUILD}
+      - NEXT_PUBLIC_ADMIN_JWT_SECRET=${NEXT_PUBLIC_ADMIN_JWT_SECRET}
       - STRAPI_API_KEY=${STRAPI_API_KEY}
       - IG_TEST_TOKEN=${IG_TEST_TOKEN}
       - APP_CLIENT_TOKEN=${APP_CLIENT_TOKEN}
@@ -69,7 +73,7 @@ services:
       - NEXT_PUBLIC_GOOGLE_ANALYTICS=${NEXT_PUBLIC_GOOGLE_ANALYTICS}
       - NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
       - VIRTUAL_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
-      - LETSENCRYPT_HOST=blog.bocas.com.ar
+      - LETSENCRYPT_HOST=blog.bocas.com.ar, www.blog.bocas.com.ar
     depends_on:    
       - strapi
 
