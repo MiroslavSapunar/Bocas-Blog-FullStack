@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/biblioteca",
+      "handler": "biblioteca.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/biblioteca",
+      "handler": "biblioteca.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/biblioteca",
+      "handler": "biblioteca.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

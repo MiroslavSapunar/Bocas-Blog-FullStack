@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "bibliotecas",
+  "info": {
+    "name": "biblioteca"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "titulo": {
+      "type": "string",
+      "required": true
+    },
+    "cuerpo_texto": {
+      "type": "richtext",
+      "required": true
+    },
+    "guia": {
+      "type": "component",
+      "repeatable": true,
+      "component": "guias.guia"
+    }
+  }
+}

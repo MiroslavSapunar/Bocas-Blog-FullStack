@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_guias_guias",
+  "info": {
+    "name": "guia",
+    "icon": "file-pdf"
+  },
+  "options": {},
+  "attributes": {
+    "nombre_pdf": {
+      "type": "string",
+      "required": true
+    },
+    "url_descarga_externa": {
+      "type": "string"
+    },
+    "pdf": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files"
+      ],
+      "plugin": "upload",
+      "required": true
+    }
+  }
+}
