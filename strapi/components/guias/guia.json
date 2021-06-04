@@ -2,7 +2,8 @@
   "collectionName": "components_guias_guias",
   "info": {
     "name": "guia",
-    "icon": "file-pdf"
+    "icon": "file-pdf",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -18,6 +19,19 @@
       "via": "related",
       "allowedTypes": [
         "files"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "resumen_guia": {
+      "type": "richtext",
+      "required": true
+    },
+    "portada_guia": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
       ],
       "plugin": "upload",
       "required": true
