@@ -18,6 +18,70 @@
     },
     {
       "method": "GET",
+      "path": "/posts/featured",
+      "handler": "post.featured",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/news",
+      "handler": "post.news",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/trending",
+      "handler": "post.trending",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/novedades",
+      "handler": "post.novedades",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/nutricion",
+      "handler": "post.nutricion",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/recetas",
+      "handler": "post.recetas",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/ecologia",
+      "handler": "post.ecologia",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/posts/busqueda",
+      "handler": "post.busqueda",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/posts/:id",
       "handler": "post.findOne",
       "config": {
