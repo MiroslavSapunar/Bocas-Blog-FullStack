@@ -18,6 +18,14 @@
     },
     {
       "method": "GET",
+      "path": "/autors/seo/:seo",
+      "handler": "autor.findOneSeoUrl",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
       "path": "/autors/:id",
       "handler": "autor.findOne",
       "config": {

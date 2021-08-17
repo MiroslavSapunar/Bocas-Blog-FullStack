@@ -5,4 +5,12 @@
  * to customize this controller
  */
 
-module.exports = {};
+const findOneSeoUrl = async (ctx) => {
+    // console.log(ctx.params)
+    const entities = await strapi.services.autor.findOneSeoUrl(ctx.params);
+    return entities;
+};
+
+module.exports = {
+    findOneSeoUrl
+};
