@@ -285,7 +285,7 @@ const aggNutricion = ({ params = "" }) => [
         }
     },
     // { $skip: parseInt(_start) },
-    { $limit: parseInt(3) }
+    // { $limit: parseInt(3) }
 ]
 
 const aggRecetas = ({ params = "" }) => [
@@ -350,7 +350,7 @@ const aggRecetas = ({ params = "" }) => [
         }
     },
     // { $skip: parseInt(_start) },
-    { $limit: parseInt(3) }
+    // { $limit: parseInt(3) }
 ]
 
 const aggEcologia = ({ params = "" }) => [
@@ -415,7 +415,7 @@ const aggEcologia = ({ params = "" }) => [
         }
     },
     // { $skip: parseInt(_start) },
-    { $limit: parseInt(3) }
+    // { $limit: parseInt(3) }
 ]
 
 const aggBusqueda = ({ busqueda = "" }) => [
