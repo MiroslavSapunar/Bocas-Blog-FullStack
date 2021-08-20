@@ -106,7 +106,8 @@ const aggFindOneSeoUrl = ({ seo = "" }) => [
                 autor_nombre: "$nombre",
                 autor_seo: "$seo_url",
                 categorias: {
-                    categoria: 1
+                    categoria: 1,
+                    url: 1
                 },
                 imagenes: {
                     url: 1,
