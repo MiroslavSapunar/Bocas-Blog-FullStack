@@ -421,7 +421,10 @@ const aggEcologia = ({ params = "" }) => [
 const aggBusqueda = ({ busqueda = "" }) => [
     {
         $match: {
-            titulo: { $regex: busqueda, $options: 'i' }
+            $or: [
+                { titulo: { $regex: busqueda, $options: 'i' } },
+                { resumen: { $regex: busqueda, $options: 'i' } }
+            ]
         }
     },
     {
